@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contract pdf
+{% endblock %}
+
+{% block body %}
+	<div class="container-xl bg-light mx-auto my-5 p-5 d-flex flex-column border border-dark">
+
+		<div class="container-md w-25  m-1 align-self-start border border-primary">
+			<p>Contrat n° :
+				{{contract.id}}</p>
+			<p>Statut :
+				{{contract.type}}</p>
+			<p>Commandé le :
+				{{contract.orderedAt}}</p>
+			<p>Facturé le :
+				{{contract.invoicedAt}}</p>
+			<p>Statut :
+				{{contract.status}}</p>
+			<p>Commentaires :
+				{{contract.comment}}</p>
+			<p>Adresse de livraison :
+				{{contract.deliveryAddress}}</p>
+			<p>Commande suivie par :
+				{{contract.user.pseudo}}</p>
+		</div>
+
+		<div class="container-md w-25 m-1 align-self-end border border-primary">
+			<p class="text-info">Nom :
+				{{contract.customer.name}}</p>
+			<p>Adresse :
+				{{contract.customer.address}}</p>
+			<p>Email :
+				{{contract.customer.email}}</p>
+			<p>Personne à contacter :
+				{{contract.customer.contact}}</p>
+		</div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Ordre</th>
+					<th scope="col">Nom</th>
+					<th scope="col">Quantité</th>
+					<th scope="col">Prix Unitaire</th>
+                    <th scope="col">Prix Total Ligne</th>
+
+				</tr>
+			</thead>
+            <tbody>
+            {% for product in contract.products %}
+                <tr>
+					<th scope="row">{{product.id}}</th>
+					<td>{{product.name}}</td>
+					<td>{{product.quantity}}</td>
+					<td>{{product.price}}</td>
+                    <td>{% set total = product.price * product.quantity %} {{total}} </td>
+				</tr>
+            {% endfor %}
+				
+				
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}
+
